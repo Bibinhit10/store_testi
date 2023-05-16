@@ -269,7 +269,7 @@ class AdminController extends Controller
         $code = strtoupper(Str::random(4).'_'.rand(1,9).rand(1,9));
 
         $data_discount=$request->validate([
-            'discount_percent'=>['file','required'],
+            'discount_percent'=>['required'],
             'max_amount'=>['integer'],
             'expiresat'=>['string','required'],
         ]);
@@ -320,6 +320,25 @@ class AdminController extends Controller
 
     }
 
+    public function add_article(Request $request)
+    {
+        
+        $data_article=$request->validate([
+            'image'=>['required','image'],
+            'title'=>['string','required'],
+            'text'=>['string','required'],
+            'is_important'=>['boolean'],
+            
+        ]);
+        // $image_name=time().'.'.$data_article['image']->extension();
+        // // $ss=$request->image->extension();
+
+        // var_dump($image_name);
+
+        // return response()->json($data_article, 200);
+        
+
+    }
 
     
 }

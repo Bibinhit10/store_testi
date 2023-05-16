@@ -48,6 +48,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
         Route::delete('admin/discount/del',[AdminController::class,'delete_discount']);
 
+        Route::post('admin/article/add',[AdminController::class,'add_article']);
+
     });
 
 
