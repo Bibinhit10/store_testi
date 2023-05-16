@@ -50,6 +50,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
         Route::post('admin/article/add',[AdminController::class,'add_article']);
 
+        Route::put('admin/article/update/{id}',[AdminController::class,'update_article']);
+
+        Route::get('admin/article/{id}',[AdminController::class,'get_article_by_id']);
+
+        Route::get('admin/articles',[AdminController::class,'get_articles']);
+        
     });
 
 
