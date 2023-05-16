@@ -269,7 +269,7 @@ class AdminController extends Controller
         $code = strtoupper(Str::random(4).'_'.rand(1,9).rand(1,9));
 
         $data_discount=$request->validate([
-            'discount_percent'=>['integer','required'],
+            'discount_percent'=>['file','required'],
             'max_amount'=>['integer'],
             'expiresat'=>['string','required'],
         ]);
