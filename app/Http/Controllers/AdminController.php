@@ -1,5 +1,7 @@
 <?php
 
+// Bibinhit_10 ***
+
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Hash;
@@ -12,6 +14,7 @@ use App\Models\Admin;
 use App\Models\User;
 use App\Models\UserAddress;
 use App\Models\discount;
+use App\Models\Categorie;
 use App\Models\Article;
 use App\Models\Wallet;
 
@@ -384,7 +387,7 @@ class AdminController extends Controller
     {
         
         $important=$request->validate([
-            'is_important'=>['boolean'],            
+            'is_important'=>['boolean'],           
         ]);
 
 
@@ -398,11 +401,86 @@ class AdminController extends Controller
 
 
 
-        $articles=$eleqent->get();
+        $articles=ArticleResource::collection($eleqent->get());
 
         return response()->json($articles, 200);
 
     }
     
+    public function add_categorie(Request $request)
+    {
+        
+        $categorie_data=$request->validate([
+            'title'=>['string','required'],            
+            'parent_id'=>['integer'],            
+        ]);
+
+        $d=Categorie::create($categorie_data);
+
+        return response()->json($d, 200);
+
+    }
+
+    public function update_categore(Request $request , String $id)
+    {
+        
+        $title=$request->validate([
+            'title'=>['string'],
+        ]);
+        
+        $data = Categorie::where('id', $id)->update($title);
+
+        return response()->json($data, 200);
+
+
+    }
+
+    public function get_categorie_by_id(string $id)
+    {
+
+        $categorie=Categorie::where('id',$id)->with('parent')->with('SubCategorie')->get();
+
+        return response()->json($categorie, 200);
+
+    }
+
+    public function get_categoreis(Request $request)
+    {
+        
+        $search=$request->validate([
+            'parent_id'=>['string'],
+            'is_main'=>['boolean'],
+        ]);
+
+        $eleqent=Categorie::query();
+
+        if ( isset($search['parent_id']) ){
+
+            $eleqent->where('id',$search['parent_id']);
+
+        }
+        
+        if ( isset($search['is_main']) ) {
+
+            if ($search['is_main']==0) {
+                $eleqent->with('SubCategorie');
+            }else {
+                $eleqent->with('parent');
+            }
+
+        }else {
+
+            $eleqent->with('parent')->with('SubCategorie');
+
+        }
+
+        $categories=$eleqent->get();
+        
+        return response()->json($categories, 200);
+
+    }
+
+
 }
+
 

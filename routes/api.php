@@ -1,5 +1,7 @@
 <?php
 
+// Bibinhit_10 ***
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
@@ -47,7 +49,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         Route::get('admin/discounts',[AdminController::class,'Get_discounts']);
 
         Route::delete('admin/discount/del',[AdminController::class,'delete_discount']);
-
+// 
         Route::post('admin/article/add',[AdminController::class,'add_article']);
 
         Route::put('admin/article/update/{id}',[AdminController::class,'update_article']);
@@ -55,6 +57,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         Route::get('admin/article/{id}',[AdminController::class,'get_article_by_id']);
 
         Route::get('admin/articles',[AdminController::class,'get_articles']);
+
+        Route::post('admin/categorie/add',[AdminController::class,'add_categorie']);
+
+        Route::put('admin/categorie/update/{id}',[AdminController::class,'update_categore']);
+
+        Route::get('admin/categories',[AdminController::class,'get_categoreis']);
+
         
     });
 
@@ -66,7 +75,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     Route::post('user/sign_up',[UserController::class, 'sign_up']);
 
     Route::post('user/login',[UserController::class,'login']);
-
 
     Route::group([
         'middleware' => ['auth:user']
