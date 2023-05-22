@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WalletController;
+use App\Http\Controllers\DiscountController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\CategorieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,37 +36,37 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         'middleware' => ['auth:admin']
     ], function(){
 
-        Route::put('/admin/user_update/{id}',[AdminController::class, 'user_update']);
+        Route::put('/admin/user_update/{id}',[UserController::class, 'user_update']);
 
-        Route::get('/admin/user/{id}',[AdminController::class, 'get_user_by_id']);
+        Route::get('/admin/user/{id}',[UserController::class, 'get_user_by_id']);
 
-        Route::get('admin/users',[AdminController::class,'get_users']);
+        Route::get('admin/users',[UserController::class,'get_users']);
 
-        Route::get('admin/users/addresses',[AdminController::class,'get_user_addresses']);
+        Route::get('admin/users/addresses',[UserController::class,'get_user_addresses']);
 
-        Route::post('admin/wallet/add',[AdminController::class,'add_wallet']);
+        Route::post('admin/wallet/add',[WalletController::class,'add_wallet']);
         
-        Route::get('admin/wallets',[AdminController::class,'get_wallet_history']);
+        Route::get('admin/wallets',[WalletController::class,'get_wallet_history']);
         
-        Route::post('admin/discount/add',[AdminController::class,'add_discount']);
+        Route::post('admin/discount/add',[DiscountController::class,'add_discount']);
 
-        Route::get('admin/discounts',[AdminController::class,'Get_discounts']);
+        Route::get('admin/discounts',[DiscountController::class,'Get_discounts']);
 
-        Route::delete('admin/discount/del',[AdminController::class,'delete_discount']);
-// 
-        Route::post('admin/article/add',[AdminController::class,'add_article']);
+        Route::delete('admin/discount/del',[DiscountController::class,'delete_discount']);
+        
+        Route::post('admin/article/add',[ArticleController::class,'add_article']);
 
-        Route::put('admin/article/update/{id}',[AdminController::class,'update_article']);
+        Route::put('admin/article/update/{id}',[ArticleController::class,'update_article']);
 
-        Route::get('admin/article/{id}',[AdminController::class,'get_article_by_id']);
+        Route::get('admin/article/{id}',[ArticleController::class,'get_article_by_id']);
 
-        Route::get('admin/articles',[AdminController::class,'get_articles']);
+        Route::get('admin/articles',[ArticleController::class,'get_articles']);
 
-        Route::post('admin/categorie/add',[AdminController::class,'add_categorie']);
+        Route::post('admin/categorie/add',[CategorieController::class,'add_categorie']);
 
-        Route::put('admin/categorie/update/{id}',[AdminController::class,'update_categore']);
+        Route::put('admin/categorie/update/{id}',[CategorieController::class,'update_categore']);
 
-        Route::get('admin/categories',[AdminController::class,'get_categoreis']);
+        Route::get('admin/categories',[CategorieController::class,'get_categoreis']);
 
         
     });

@@ -5,14 +5,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Hash;
-use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\DB;
 use App\Http\Resources\UserAddressResource;
+use App\Http\Resources\ArticleResource;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use App\Models\Admin;
 use App\Models\User;
 use App\Models\UserAddress;
+use App\Models\discount;
+use App\Models\Categorie;
+use App\Models\Article;
+use App\Models\Wallet;
+
+
 
 class UserController extends Controller
 {
+
+// User
 
     public function sign_up(Request $request)
     {
@@ -166,6 +178,112 @@ class UserController extends Controller
 
 
     }
+
+// Admin
+    
+    public function user_update(Request $request,string $id)
+    {
+
+        $user_data = $request->validate([
+            'name' => ['string'],
+            'password' => ['string'],
+            'email'=> ['string'],
+            'phone_number'=> ['integer'],
+        ]);
+
+        if (isset($user_data['password'])) {
+
+            $user_data['password'] = Hash::make($user_data['password']);
+
+        }
+
+        $user = user::where('id', $id)->update($user_data);
+
+        return response()->json([
+            'message' => 'update shod !...'
+        ], 200);
+
+    }
+
+    public function get_user_by_id(Request $request,String $id)
+    {
+
+        $user = user::where('id', $id)->first();
+
+
+        if (empty($user))
+        {
+            return response()->json([
+                'message' => ' user vojod nadarad !...'
+            ], 200);
+        }
+
+        $user = new UserResource($user);
+
+        return response()->json($user , 200);
+
+    }
+
+    public function get_users(Request $request)
+    {
+
+        $data= $request->validate([
+            'search' => ['string'],
+        ]);
+
+        $eleqent = user::query();
+
+
+        if( isset( $data['search'] ) ){
+
+            $eleqent= $eleqent->where('name','LIKE',"%{$data['search']}%");
+
+        }
+         $data_users= $eleqent->get();
+
+        if( empty( $data_users ) ){
+
+            return response()->json( ' vojod nadarad ..! ', 500);
+
+        }
+
+        return response()->json( $data_users, 200);
+
+
+
+    }
+    
+    public function get_user_addresses(Request $request)
+    {
+        
+        $user_id= $request->validate([
+            'user_id' => ['string'],
+        ]);
+
+
+        $eleqent = User::query();
+
+        if( isset( $user_id['user_id'] ) ){
+
+            $eleqent = $eleqent->where('id', $user_id);
+
+        }
+        
+         $data_users= $eleqent->with('Addresses')->get();
+
+         
+        if( empty( $data_users ) ){
+
+            return response()->json( ' vojod nadarad ..! ', 500);
+
+        }
+
+        return response()->json( $data_users, 200);
+
+
+
+    }
+
 
 
 }
