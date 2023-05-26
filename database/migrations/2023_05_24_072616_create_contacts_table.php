@@ -13,11 +13,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('discount_users', function (Blueprint $table) {
+        Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('discount_id');
-            $table->softDeletes();
+            $table->string('full_name');
+            $table->string('phone_number');
+            $table->string('email');
+            $table->string('message');
+            $table->boolean('is_seen')->default(false);
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('discount_users');
+        Schema::dropIfExists('contacts');
     }
 };
