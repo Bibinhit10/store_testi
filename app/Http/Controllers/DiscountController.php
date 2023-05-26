@@ -16,6 +16,7 @@ use App\Models\UserAddress;
 use App\Models\discount;
 use App\Models\Categorie;
 use App\Models\Article;
+use App\Models\DiscountUser;
 use App\Models\Wallet;
 
 class DiscountController extends Controller
@@ -72,9 +73,24 @@ class DiscountController extends Controller
         $data=discount::where('id', $discount_id)->delete();
 
         // $data=discount::withTrashed()->where('id', 1)->restore();
+        DiscountUser::where('discount_id', $discount_id)->delete();
 
         return response()->json(' ok ... ', 200);
         
+
+    }
+
+    public function add_discount_to_user(Request $request)
+    {
+        
+        $ides=$request->validate([
+            'user_id'=>['string','required'],
+            'discount_id'=>['string','required']
+        ]);
+
+        DiscountUser::create($ides);
+
+        return response()->json(' ok .. ', 200);
 
     }
     

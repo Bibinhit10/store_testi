@@ -10,6 +10,7 @@ use App\Http\Controllers\WalletController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         Route::get('admin/discounts',[DiscountController::class,'Get_discounts']);
 
         Route::delete('admin/discount/del',[DiscountController::class,'delete_discount']);
+
+        Route::post('admin/discount/add_user',[DiscountController::class,'add_discount_to_user']);
         
         Route::post('admin/article/add',[ArticleController::class,'add_article']);
 
@@ -68,6 +71,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
         Route::get('admin/categories',[CategorieController::class,'get_categoreis']);
 
+        Route::get('admin/contacts', [ContactController::class,'get_contact']);
+
+        Route::get('admin/contact/{id}', [ContactController::class,'get_seen_contact_by_id']);
         
     });
 
@@ -98,5 +104,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
     });
 
-
 // user
+
+    Route::post('contact_us/add', [ContactController::class,'add_contact_message']);
