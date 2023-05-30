@@ -7,16 +7,12 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\UserAddressResource;
-use App\Http\Resources\ArticleResource;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Models\Admin;
 use App\Models\User;
 use App\Models\UserAddress;
-use App\Models\discount;
 use App\Models\Categorie;
-use App\Models\Article;
 use App\Models\Wallet;
 
 

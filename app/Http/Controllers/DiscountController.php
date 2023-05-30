@@ -7,17 +7,10 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use App\Http\Resources\UserResource;
-use App\Http\Resources\ArticleResource;
 use Illuminate\Support\Str;
-use App\Models\Admin;
 use App\Models\User;
-use App\Models\UserAddress;
-use App\Models\discount;
-use App\Models\Categorie;
-use App\Models\Article;
+use App\Models\Discount;
 use App\Models\DiscountUser;
-use App\Models\Wallet;
 
 class DiscountController extends Controller
 {
@@ -37,7 +30,7 @@ class DiscountController extends Controller
 
         $data_discount['code']=$code;
         
-        $discount=discount::where('code',$data_discount['code'])->first();
+        $discount=Discount::where('code',$data_discount['code'])->first();
 
         if (!empty($discount)) {
             
@@ -45,7 +38,7 @@ class DiscountController extends Controller
 
         }
 
-        $discount=discount::create($data_discount);
+        $discount=Discount::create($data_discount);
 
     
         return response()->json($discount, 200);
@@ -55,9 +48,9 @@ class DiscountController extends Controller
     public function Get_discounts()
     {
         
-        // $discounts = discount::withTrashed()->get();
+        // $discounts = Discount::withTrashed()->get();
         
-        $discounts = discount::get();
+        $discounts = Discount::get();
 
         return response()->json($discounts, 200);
 
@@ -70,9 +63,9 @@ class DiscountController extends Controller
             'discount_id'=>['string','required'],
         ]);
         
-        $data=discount::where('id', $discount_id)->delete();
+        $data=Discount::where('id', $discount_id)->delete();
 
-        // $data=discount::withTrashed()->where('id', 1)->restore();
+        // $data=Discount::withTrashed()->where('id', 1)->restore();
         DiscountUser::where('discount_id', $discount_id)->delete();
 
         return response()->json(' ok ... ', 200);
