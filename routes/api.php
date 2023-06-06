@@ -37,44 +37,58 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         'middleware' => ['auth:admin']
     ], function(){
 
-        Route::put('/admin/user_update/{id}',[UserController::class, 'user_update']);
+        // A User
+            Route::put('/admin/user_update/{id}',[UserController::class, 'user_update']);
 
-        Route::get('/admin/user/{id}',[UserController::class, 'get_user_by_id']);
+            Route::get('/admin/user/{id}',[UserController::class, 'get_user_by_id']);
 
-        Route::get('admin/users',[UserController::class,'get_users']);
+            Route::get('admin/users',[UserController::class,'get_users']);
 
-        Route::get('admin/users/addresses',[UserController::class,'get_user_addresses']);
+            Route::get('admin/users/addresses',[UserController::class,'get_user_addresses']);
+        // A User
 
-        Route::post('admin/wallet/add',[WalletController::class,'add_wallet']);
+        // A Wallet
+            Route::post('admin/wallet/add',[WalletController::class,'add_wallet']);
+            
+            Route::get('admin/wallets',[WalletController::class,'get_wallet_history']);
+        // A Wallet
         
-        Route::get('admin/wallets',[WalletController::class,'get_wallet_history']);
+        // A Discount
+            Route::post('admin/discount/add',[DiscountController::class,'add_discount']);
+
+            Route::get('admin/discounts',[DiscountController::class,'Get_discounts']);
+
+            Route::delete('admin/discount/del',[DiscountController::class,'delete_discount']);
+
+            Route::post('admin/discount/add_user',[DiscountController::class,'add_discount_to_user']);
+        // A Discount
         
-        Route::post('admin/discount/add',[DiscountController::class,'add_discount']);
+        // A Article
+            Route::post('admin/article/add',[ArticleController::class,'add_article']);
 
-        Route::get('admin/discounts',[DiscountController::class,'Get_discounts']);
+            Route::put('admin/article/update/{id}',[ArticleController::class,'update_article']);
 
-        Route::delete('admin/discount/del',[DiscountController::class,'delete_discount']);
+            Route::get('admin/article/{id}',[ArticleController::class,'get_article_by_id']);
 
-        Route::post('admin/discount/add_user',[DiscountController::class,'add_discount_to_user']);
-        
-        Route::post('admin/article/add',[ArticleController::class,'add_article']);
+            Route::get('admin/articles',[ArticleController::class,'get_articles']);
+        // A Article
 
-        Route::put('admin/article/update/{id}',[ArticleController::class,'update_article']);
+        // A Categorie
+            Route::post('admin/categorie/add',[CategorieController::class,'add_categorie']);
 
-        Route::get('admin/article/{id}',[ArticleController::class,'get_article_by_id']);
+            Route::put('admin/categorie/update/{id}',[CategorieController::class,'update_categore']);
 
-        Route::get('admin/articles',[ArticleController::class,'get_articles']);
+            Route::get('admin/categories',[CategorieController::class,'get_categoreis']);
+        // A Categorie
 
-        Route::post('admin/categorie/add',[CategorieController::class,'add_categorie']);
+        // A Contacts
+            Route::get('admin/contacts', [ContactController::class,'get_contact']);
 
-        Route::put('admin/categorie/update/{id}',[CategorieController::class,'update_categore']);
+            Route::get('admin/contact/{id}', [ContactController::class,'get_seen_contact_by_id']);
+            
+            Route::post('admin/contact_us_contact/add', [ContactController::class,'add_CUC']);
+        // A Contacts
 
-        Route::get('admin/categories',[CategorieController::class,'get_categoreis']);
-
-        Route::get('admin/contacts', [ContactController::class,'get_contact']);
-
-        Route::get('admin/contact/{id}', [ContactController::class,'get_seen_contact_by_id']);
-        
     });
 
 
@@ -94,16 +108,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
         Route::put('user/my_info/update',[UserController::class,'update_info']);
         
-        Route::post('user/address/add',[UserController::class,'add_address']);
+        // A Address
+            Route::post('user/address/add',[UserController::class,'add_address']);
 
-        Route::get('user/address',[UserController::class,'get_addresses']);
+            Route::get('user/address',[UserController::class,'get_addresses']);
 
-        Route::delete('user/address/del',[UserController::class,'delete_address']);
+            Route::delete('user/address/del',[UserController::class,'delete_address']);
 
-        Route::put('user/address/update',[UserController::class,'update_address']);
+            Route::put('user/address/update',[UserController::class,'update_address']);
+        // A Address
 
     });
 
 // user
 
     Route::post('contact_us/add', [ContactController::class,'add_contact_message']);
+
+    Route::post('contact_us_contact', [ContactController::class,'get_CUC']);
+

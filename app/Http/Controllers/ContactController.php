@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Contact;
+use App\Models\ContactUsContact;
 
 class ContactController extends Controller
 {
@@ -48,5 +49,42 @@ class ContactController extends Controller
         
     }
 
+    public function add_CUC(Request $request)
+    {
+
+        $content_data=$request->validate([
+            'instagram'=>['string','required'],
+            'email'=>['string','required'],
+            'phone_number'=>['string','required'],
+            'address'=>['string','required'],
+        ]);
+        
+        $content_data['id']=1;
+
+        $s=ContactUsContact::find(1);
+
+
+        if (empty($s)) {
+
+            $data=ContactUsContact::create($content_data);
+        
+        }else {
+            $data=ContactUsContact::where('id',1)->update($content_data);
+        }
+
+
+
+        return response()->json($data, 200);
+    
+    }
+
+    public function get_CUC(Request $request)
+    {
+        
+        $C_date=ContactUsContact::find(1);
+
+        return response()->json($C_date, 200);
+
+    }
 
 }
