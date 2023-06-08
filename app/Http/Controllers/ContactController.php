@@ -6,7 +6,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Contact;
+use App\Models\AboutUs;
 use App\Models\ContactUsContact;
+use File;
 
 class ContactController extends Controller
 {
@@ -78,12 +80,63 @@ class ContactController extends Controller
     
     }
 
-    public function get_CUC(Request $request)
+    public function get_CUC()
     {
         
-        $C_date=ContactUsContact::find(1);
+        $C_data=ContactUsContact::find(1);
 
-        return response()->json($C_date, 200);
+        return response()->json($C_data, 200);
+
+    }
+
+    public function add_about_us(Request $request)
+    {
+
+        $content_data=$request->validate([
+            'text'=>['string','required'],
+            'image'=>['image','required'],
+        ]);
+        
+        $content_data['id']=1;
+
+        $image_name=time().'.'.$content_data['image']->extension();
+
+        $content_data['image']->move(public_path('images/about_us'),$image_name);    
+
+        $content_data['image']=$image_name;
+
+
+        $data=AboutUs::find(1);
+
+
+        if (empty($data)) {
+
+            AboutUs::create($content_data);
+        
+        }else {
+
+            $image_path = public_path('images/about_us/'.$data['image']);
+
+            if(File::exists($image_path)) {
+                File::delete($image_path);
+            }
+
+            AboutUs::where('id',1)->update($content_data);
+        }
+
+
+
+        return response()->json($content_data, 200);
+        
+    }
+
+    public function get_about()
+    {
+        $about_data=AboutUs::find(1);
+
+        $about_data['image']='images/about_us/'.$about_data['image'];
+
+        return response()->json($about_data, 200);
 
     }
 

@@ -89,6 +89,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
             Route::post('admin/contact_us_contact/add', [ContactController::class,'add_CUC']);
         // A Contacts
 
+        Route::post('admin/about_us',[ContactController::class,'add_about_us']);
+
     });
 
 
@@ -124,5 +126,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
     Route::post('contact_us/add', [ContactController::class,'add_contact_message']);
 
-    Route::post('contact_us_contact', [ContactController::class,'get_CUC']);
+    Route::get('contact_us_contact', [ContactController::class,'get_CUC']);
 
+    Route::get('about_us', [ContactController::class,'get_about']);
+
+    
