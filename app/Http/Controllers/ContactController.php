@@ -71,7 +71,7 @@ class ContactController extends Controller
             $data=ContactUsContact::create($content_data);
         
         }else {
-            $data=ContactUsContact::where('id',1)->update($content_data);
+            $data=ContactUsContact::limit(1)->update($content_data);
         }
 
 

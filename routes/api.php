@@ -11,6 +11,7 @@ use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,9 +88,25 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
             Route::get('admin/contact/{id}', [ContactController::class,'get_seen_contact_by_id']);
             
             Route::post('admin/contact_us_contact/add', [ContactController::class,'add_CUC']);
+            
+            Route::post('admin/about_us',[ContactController::class,'add_about_us']);
+
         // A Contacts
 
-        Route::post('admin/about_us',[ContactController::class,'add_about_us']);
+        // A Product
+
+            Route::post('admin/product/add',[ProductController::class,'add_product']);
+
+            Route::put('admin/product/update/{id}',[ProductController::class,'update_product']);
+
+            Route::delete('admin/product/del/{id}',[ProductController::class,'delete_product']);
+
+            Route::get('admin/product/{id}',[ProductController::class,'get_by_id_product']);
+
+            Route::get('admin/products',[ProductController::class,'get_products']);
+
+        // A Product
+
 
     });
 
@@ -124,10 +141,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // user
 
-    Route::post('contact_us/add', [ContactController::class,'add_contact_message']);
+        // A Contacts
 
-    Route::get('contact_us_contact', [ContactController::class,'get_CUC']);
+            Route::post('contact_us/add', [ContactController::class,'add_contact_message']);
 
-    Route::get('about_us', [ContactController::class,'get_about']);
+            Route::get('contact_us_contact', [ContactController::class,'get_CUC']);
+
+            Route::get('about_us', [ContactController::class,'get_about']);
+
+        // A Contacts
+
 
     

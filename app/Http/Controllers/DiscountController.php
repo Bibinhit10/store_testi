@@ -48,7 +48,7 @@ class DiscountController extends Controller
     public function Get_discounts()
     {
         
-        // $discounts = Discount::withTrashed()->get();
+        // $discounts = Discount::withTrashed()->get(); دریافت فیلد های نیمه پاک شده
         
         $discounts = Discount::get();
 
@@ -65,7 +65,7 @@ class DiscountController extends Controller
         
         $data=Discount::where('id', $discount_id)->delete();
 
-        // $data=Discount::withTrashed()->where('id', 1)->restore();
+        // $data=Discount::withTrashed()->where('id', 1)->restore();   برگردوندن فیلد از پاک شده ها
         DiscountUser::where('discount_id', $discount_id)->delete();
 
         return response()->json(' ok ... ', 200);
