@@ -1,7 +1,5 @@
 <?php
 
-// Bibinhit_10 ***
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_items', function (Blueprint $table) {
+        Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->integer('order_id');
-            $table->integer('user_id');
-            $table->integer('product_id');
+            $table->string('user_id');
+            $table->string('product_id');
             $table->integer('count');
+            $table->integer('total_amount');
             $table->timestamps();
+            
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_items');
+        Schema::dropIfExists('carts');
     }
 };

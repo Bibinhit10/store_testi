@@ -12,6 +12,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -136,6 +137,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
             Route::put('user/address/update',[UserController::class,'update_address']);
         // A Address
+
+        
+        Route::post('user/my_cart/add',[OrderController::class,'add_to_cart']);
+
+        Route::delete('user/my_cart/del',[OrderController::class,'del_product_cart_by_id']);
+
+        Route::get('user/my_cart',[OrderController::class,'get_my_carts']);
+
+        Route::post('user/order/add',[OrderController::class,'add_cart_to_order']);
 
     });
 
